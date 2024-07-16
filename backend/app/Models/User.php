@@ -19,8 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
+        'email',
         'password',
+        'username', // Add 'username' to fillable attributes if it's not already there
+        'role_id',  // Add 'role_id' to fillable attributes for association
     ];
 
     /**
@@ -51,5 +53,9 @@ class User extends Authenticatable
     public function findForPassport($username)
     {
         return $this->where('username', $username)->first();
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
