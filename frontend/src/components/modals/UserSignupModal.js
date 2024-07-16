@@ -15,7 +15,7 @@ const UserSignupModal = ({ show, onHide }) => {
             const response = await axios.post('http://localhost/api/create-user', {
                 username,
                 password,
-                role,
+                role: 'admin', // Assuming default role for user creation
             });
             console.log(response.data);
             alert('User created successfully!');

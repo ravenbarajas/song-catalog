@@ -34,9 +34,6 @@ function App() {
       <main className="App-main">
         {isAuthenticated ? <AdminHomePage /> : <AdminLoginPage handleLogin={handleLogin} setUsername={setUsername} setPassword={setPassword} error={error} />}
       </main>
-      <Button variant="primary" onClick={handleShowModal}>
-          Create User
-      </Button>
       <UserSignupModal show={showModal} onHide={handleHideModal} />
     </div>
   );

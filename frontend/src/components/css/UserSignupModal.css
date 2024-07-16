@@ -1,0 +1,13 @@
+/* App.css */
+
+.user-signup-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050; /* Adjust the z-index to make sure it's above other content */
+}
+
+.modal-backdrop.show {
+    z-index: 1040; /* Ensure modal backdrop z-index is lower than modal */
+}
