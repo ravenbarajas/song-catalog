@@ -12,7 +12,7 @@ const AdminLoginPage = () => {
     const handleLogin = async (e) => {
       e.preventDefault();
       try {
-          const response = await axios.post('http://localhost/api/login', { username, password });
+          const response = await axios.post('http://localhost:8000/api/login', { username, password });
           console.log('Login successful:', response.data);
           // Handle successful login (e.g., store token in localStorage)
       } catch (error) {
