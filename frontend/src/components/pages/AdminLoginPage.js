@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Form, Modal } from 'react-bootstrap';
 import UserSignupModal from '../modals/UserSignupModal'; // Adjust the path as needed
 
-const AdminLoginPage = () => {
+const AdminLoginPage = ({ setLoggedInUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -15,7 +17,9 @@ const AdminLoginPage = () => {
           const response = await axios.post('http://localhost:8000/api/login', { username, password });
           console.log('Login successful:', response.data);
           // Handle successful login (e.g., store token in localStorage)
-      } catch (error) {
+          setLoggedInUser(response.data.user); // Assuming response.data contains user details
+          navigate('/adminhomepage');
+        } catch (error) {
           if (error.response) {
               // Server responded with a status code outside the range of 2xx
               setError(error.response.data.message);
