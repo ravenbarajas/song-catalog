@@ -12,14 +12,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Create roles
-        $adminRole = Role::create([
+        $adminRole = \App\Models\Role::create([
             'name' => 'admin',
-            'description' => 'Administrator role',
         ]);
 
-        $superadminRole = Role::create([
+        $superadminRole = \App\Models\Role::create([
             'name' => 'superadmin',
-            'description' => 'Super Administrator role',
         ]);
 
         // Create users with roles

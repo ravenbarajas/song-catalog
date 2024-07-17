@@ -3,7 +3,7 @@ import React from 'react';
 function AdminHomePage() {
   return (
     <div>
-      {/* Your home page JSX */}
+      <h1>Admin Homepage</h1>
     </div>
   );
 }
