@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Form, Modal } from 'react-bootstrap';
 import UserSignupModal from '../modals/UserSignupModal'; // Adjust the path as needed
+import '../css/adminloginpage.css'; // Import the stylesheet
 
 const AdminLoginPage = ({ setLoggedInUser }) => {
     const [username, setUsername] = useState('');
@@ -40,39 +41,39 @@ const AdminLoginPage = ({ setLoggedInUser }) => {
     const handleHideModal = () => setShowModal(false);
 
     return (
-      <div className="admin-login-page">
+      <div className="adminloginpage-container">
+        <div className='adminloginpage-header'>
           <h3>Admin Login Page</h3>
-          <Form onSubmit={handleLogin}>
-              <Form.Group controlId="formUsername">
-                  <Form.Label>Username:</Form.Label>
+        </div>
+        <div className='adminloginpage-body'>
+          <Form className="adminloginpage-form" onSubmit={handleLogin}>
+              <Form.Group className="adminloginpage-form-group"  controlId="formUsername">
+                  <Form.Label className="adminloginpage-form-label">Username:</Form.Label>
                   <Form.Control
+                      className="adminloginpage-form-control"
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       required
                   />
               </Form.Group>
-              <Form.Group controlId="formPassword">
-                  <Form.Label>Password:</Form.Label>
+              <Form.Group className="adminloginpage-form-group" controlId="formPassword">
+                  <Form.Label className="adminloginpage-form-label">Password:</Form.Label>
                   <Form.Control
+                      className="adminloginpage-form-control"
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                   />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button className="adminloginpage-btn" variant="primary" type="submit">
                   Login
               </Button>
-              <Button variant="secondary" onClick={handleShowModal}>
-                  Create User
-              </Button>
           </Form>
-
+        </div>
           {/* Error handling display */}
           {error && <p className="error-message">Error: {error}</p>}
-
-          <UserSignupModal show={showModal} onHide={handleHideModal} />
       </div>
   );
 };

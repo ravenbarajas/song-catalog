@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../css/adminhomepage.css'; // Import the stylesheet
 
 const AdminHomePage = ({ user, setLoggedInUser  }) => {
     const navigate = useNavigate();
@@ -19,11 +20,18 @@ const AdminHomePage = ({ user, setLoggedInUser  }) => {
     };
 
     return (
-        <div className="admin-home-page">
-            <h3>Welcome, {user.username}!</h3>
-            <p>You are logged in as an admin.</p>
-            <button onClick={handleLogout}>Logout</button>
-            {/* Add admin-specific content here */}
+        <div className="adminhomepage-container">
+            <div className='adminhomepage-header'>
+                <h3>Welcome, {user.username}!</h3>
+            </div>
+            <div className='adminhomepage-body'>
+                <p>You are logged in as an admin.</p>
+                <button onClick={handleLogout}>
+                    Logout
+                </button>
+            </div>
+            <div className='adminhomepage-footer'>
+            </div>
         </div>
     );
 };

@@ -1,0 +1,20 @@
+.adminhomepage-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.adminhomepage-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.adminhomepage-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.adminhomepage-footer {
+
+}
