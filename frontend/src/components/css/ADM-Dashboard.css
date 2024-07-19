@@ -1,0 +1,24 @@
+.adm-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1080px;
+    background-color: #ebebeb;
+}
+.adm-dashboard-header {
+    padding: 1rem;
+    
+}
+.adm-dashboard-header h3{
+    margin: 0px;
+    
+}
+.adm-dashboard-navbar {
+    
+}
+.adm-dashboard-body {
+    
+}
+.adm-dashboard-footer {
+    
+}

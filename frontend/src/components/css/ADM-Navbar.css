@@ -1,0 +1,25 @@
+.admin-navbar {
+    display: flex;
+    background-color: #d2d2d2;
+}
+.admin-navbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+.admin-navbar-btn {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ddd;
+}
+.btn-5 {
+    border-right: 0px solid #ddd;
+}
+.admin-navbar-btn p {
+    text-align: center;
+    margin: .5rem;
+}

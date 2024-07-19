@@ -1,0 +1,24 @@
+.adm-settings-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1080px;
+    background-color: #ebebeb;
+}
+.adm-settings-header {
+    padding: 1rem;
+    
+}
+.adm-settings-header h3{
+    margin: 0px;
+    
+}
+.adm-settings-navbar {
+    
+}
+.adm-settings-body {
+    
+}
+.adm-settings-footer {
+    
+}

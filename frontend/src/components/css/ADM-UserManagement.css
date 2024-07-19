@@ -1,0 +1,24 @@
+.adm-usermanagement-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1080px;
+    background-color: #ebebeb;
+}
+.adm-usermanagement-header {
+    padding: 1rem;
+    
+}
+.adm-usermanagement-header h3{
+    margin: 0px;
+    
+}
+.adm-usermanagement-navbar {
+    
+}
+.adm-usermanagement-body {
+    
+}
+.adm-usermanagement-footer {
+    
+}

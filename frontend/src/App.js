@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AdminLoginPage from './components/pages/AdminLoginPage';
-import AdminHomePage from './components/pages/AdminHomePage';
+import AdminLoginPage from './components/pages/ADM-LoginPage';
+import AdminHomePage from './components/pages/ADM-HomePage';
 
 const App = () => {
     const [loggedInUser, setLoggedInUser] = useState(null);
@@ -15,7 +15,7 @@ const App = () => {
                         element={<AdminLoginPage setLoggedInUser={setLoggedInUser} />}
                     />
                     <Route
-                        path="/adminhomepage"
+                        path="/adminhomepage/*"
                         element={
                             loggedInUser ? (
                                 <AdminHomePage user={loggedInUser} setLoggedInUser={setLoggedInUser} />

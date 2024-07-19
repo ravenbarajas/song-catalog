@@ -1,0 +1,24 @@
+.adm-reports-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1080px;
+    background-color: #ebebeb;
+}
+.adm-reports-header {
+    padding: 1rem;
+    
+}
+.adm-reports-header h3{
+    margin: 0px;
+    
+}
+.adm-reports-navbar {
+    
+}
+.adm-reports-body {
+    
+}
+.adm-reports-footer {
+    
+}

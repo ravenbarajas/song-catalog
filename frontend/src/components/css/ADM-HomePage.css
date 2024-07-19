@@ -1,0 +1,43 @@
+.adminhomepage-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+.adminhomepage-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.adminhomepage-header h3 {
+    display: flex;
+    width: 100%;
+    text-align: start;
+    margin: .5rem;
+}
+.adminhomepage-header p {
+    display: flex;
+    width: 100%;
+    text-align: start;
+    margin: 0;
+}
+.adminhomepage-header-btn {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    padding-top: 1rem;
+}
+.adminhomepage-body {
+    display: flex;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.adminhomepage-footer {
+
+}
