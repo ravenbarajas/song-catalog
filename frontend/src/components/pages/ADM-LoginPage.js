@@ -8,7 +8,6 @@ const AdminLoginPage = ({ setLoggedInUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -16,6 +15,8 @@ const AdminLoginPage = ({ setLoggedInUser }) => {
       try {
           const response = await axios.post('http://localhost:8000/api/login', { username, password });
           console.log('Login successful:', response.data);
+          // Save user data in local storage
+          localStorage.setItem('loggedInUser', JSON.stringify(response.data.user));
           // Handle successful login (e.g., store token in localStorage)
           setLoggedInUser(response.data.user); // Assuming response.data contains user details
           navigate('/adminhomepage');
