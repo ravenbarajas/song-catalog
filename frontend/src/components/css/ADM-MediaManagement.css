@@ -1,24 +1,24 @@
-.adm-mediamanagement-container {
+.adm-mediamngmt-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 1080px;
     background-color: #ebebeb;
 }
-.adm-mediamanagement-header {
+.adm-mediamngmt-header {
     padding: 1rem;
     
 }
-.adm-mediamanagement-header h3{
+.adm-mediamngmt-header h3{
     margin: 0px;
     
 }
-.adm-mediamanagement-navbar {
+.adm-mediamngmt-navbar {
     
 }
-.adm-mediamanagement-body {
+.adm-mediamngmt-body {
     
 }
-.adm-mediamanagement-footer {
+.adm-mediamngmt-footer {
     
 }

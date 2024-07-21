@@ -6,17 +6,22 @@ import '../css/ADM-MediaManagement.css'; // Import the stylesheet
 const AdminMediaManagement = () => {
 
     return (
-        <div className="adm-mediamanagement-container">
-            <div className='adm-mediamanagement-header'>
+        <div className="adm-mediamngmt-container">
+            <div className='adm-mediamngmt-header'>
                 <h3>Media Management</h3>
             </div>
-            <div className='adm-mediamanagement-navbar'>
-                
+            <div className='adm-mediamngmt-navbar'>
+                <div className='adm-mediamngmt-tbl-section'>
+
+                </div>
+                <div className='adm-mediamngmt-cntrl-section'>
+                    
+                </div>
             </div>
-            <div className='adm-mediamanagement-body'>
+            <div className='adm-mediamngmt-body'>
 
             </div>
-            <div className='adm-mediamanagement-footer'>
+            <div className='adm-mediamngmt-footer'>
             </div>
         </div>
     );
