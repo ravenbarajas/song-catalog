@@ -13,7 +13,7 @@ const AdminLoginPage = ({ setLoggedInUser }) => {
     const handleLogin = async (e) => {
       e.preventDefault();
       try {
-          const response = await axios.post('http://localhost:8000/api/login', { username, password });
+          const response = await axios.post('http://127.0.0.1:8000/api/login', { username, password });
           console.log('Login successful:', response.data);
           // Save user data in local storage
           localStorage.setItem('loggedInUser', JSON.stringify(response.data.user));

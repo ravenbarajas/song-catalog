@@ -6,17 +6,22 @@ import '../css/ADM-UserManagement.css'; // Import the stylesheet
 const AdminUserManagement = () => {
 
     return (
-        <div className="adm-usermanagement-container">
-            <div className='adm-usermanagement-header'>
+        <div className="adm-usermgmt-container">
+            <div className='adm-usermgmt-header'>
                 <h3>User Management</h3>
             </div>
-            <div className='adm-usermanagement-navbar'>
+            <div className='adm-usermgmt-navbar'>
                 
             </div>
-            <div className='adm-usermanagement-body'>
+            <div className='adm-usermgmt-body'>
+                <div className='adm-usermgmt-tbl-section'>
 
+                </div>
+                <div className='adm-usermgmt-ctrl-section'>
+                    
+                </div>
             </div>
-            <div className='adm-usermanagement-footer'>
+            <div className='adm-usermgmt-footer'>
             </div>
         </div>
     );

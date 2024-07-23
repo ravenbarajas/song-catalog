@@ -1,24 +1,41 @@
-.adm-usermanagement-container {
+.adm-usermgmt-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 1080px;
     background-color: #ebebeb;
 }
-.adm-usermanagement-header {
-    padding: 1rem;
-    
+.adm-usermgmt-header {
+    /* Padding on top, right, and bottom, but not on left */
+    padding: 1rem 1rem 0rem 1rem;  
 }
-.adm-usermanagement-header h3{
+.adm-usermgmt-header h3{
     margin: 0px;
     
 }
-.adm-usermanagement-navbar {
+.adm-usermgmt-navbar {
     
 }
-.adm-usermanagement-body {
-    
+.adm-usermgmt-body {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
 }
-.adm-usermanagement-footer {
+.adm-usermgmt-tbl-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 70%;
+    background-color: #fff;
+}
+.adm-usermgmt-ctrl-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 30%;
+}
+.adm-usermgmt-footer {
     
 }
