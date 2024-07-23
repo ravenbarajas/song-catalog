@@ -10,6 +10,14 @@ import Media from './ADM-MediaManagement.js';
 import Reports from './ADM-Reports.js';
 import Settings from './ADM-Settings.js';
 
+
+// Import Media Management subpages
+import General from './subpages/ADM-MediaManagement/ADM-MM-General';
+import Categories from './subpages/ADM-MediaManagement/ADM-MM-Categories';
+import Analytics from './subpages/ADM-MediaManagement/ADM-MM-Analytics';
+import Moderation from './subpages/ADM-MediaManagement/ADM-MM-Moderation';
+import MediaSettings from './subpages/ADM-MediaManagement/ADM-MM-Settings';
+
 const AdminHomePage = ({ user, setLoggedInUser  }) => {
     const navigate = useNavigate();
 
@@ -43,7 +51,14 @@ const AdminHomePage = ({ user, setLoggedInUser  }) => {
                 <Routes>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="users" element={<Users />} />
-                    <Route path="media" element={<Media />} />
+                    <Route path="media" element={<Media />}>
+                        <Route index element={<General />} />
+                        <Route path="General" element={<General />} />
+                        <Route path="Categories" element={<Categories />} />
+                        <Route path="Analytics" element={<Analytics />} />
+                        <Route path="Moderation" element={<Moderation />} />
+                        <Route path="Settings" element={<MediaSettings />} />
+                    </Route>
                     <Route path="reports" element={<Reports />} />
                     <Route path="settings" element={<Settings />} />
                     <Route path="/" element={<Navigate to="dashboard" />} />

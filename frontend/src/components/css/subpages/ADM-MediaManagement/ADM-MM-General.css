@@ -1,0 +1,26 @@
+.ADM-MM-General-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+.ADM-MM-General-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* Padding on top, right, and bottom, but not on left */
+    padding: .5rem 1rem .5rem 1rem;  
+    background-color: #fff;
+}
+.ADM-MM-General-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    padding: 0rem 1rem 0rem 1rem; 
+}
+.ADM-MM-General-footer {
+    
+}

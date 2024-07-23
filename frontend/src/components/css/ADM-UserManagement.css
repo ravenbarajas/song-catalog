@@ -1,15 +1,10 @@
-<<<<<<< HEAD
 .adm-usermgmt-container {
-=======
-.adm-usermngmt-container {
->>>>>>> ba8de7b00f9c1ad6a3ade3a5682170b9a46f06ef
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 1080px;
     background-color: #ebebeb;
 }
-<<<<<<< HEAD
 .adm-usermgmt-header {
     /* Padding on top, right, and bottom, but not on left */
     padding: 1rem 1rem 0rem 1rem;  
@@ -42,22 +37,5 @@
     width: 30%;
 }
 .adm-usermgmt-footer {
-=======
-.adm-usermngmt-header {
-    padding: 1rem;
-    
-}
-.adm-usermngmt-header h3{
-    margin: 0px;
-    
-}
-.adm-usermngmt-navbar {
-    
-}
-.adm-usermngmt-body {
-    
-}
-.adm-usermngmt-footer {
->>>>>>> ba8de7b00f9c1ad6a3ade3a5682170b9a46f06ef
     
 }
