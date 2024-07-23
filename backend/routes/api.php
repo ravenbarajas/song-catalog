@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -21,6 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// For AuthController
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::post('/create-user', [UserController::class, 'store']);
+
+//For MediController
+Route::get('/media', [MediaController::class, 'index']);
+Route::post('/media', [MediaController::class, 'store']);
+Route::get('/media/{id}', [MediaController::class, 'show']);
+Route::put('/media/{id}', [MediaController::class, 'update']);
+Route::delete('/media/{id}', [MediaController::class, 'destroy']);
+
+Route::post('/upload', [MediaController::class, 'upload']);
+Route::get('/media', [MediaController::class, 'search']);
+
