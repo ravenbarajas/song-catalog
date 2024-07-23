@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 .adm-mediamgmt-container {
+=======
+.adm-mediamngmt-container {
+>>>>>>> ba8de7b00f9c1ad6a3ade3a5682170b9a46f06ef
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 1080px;
     background-color: #ebebeb;
 }
+<<<<<<< HEAD
 .adm-mediamgmt-header {
     /* Padding on top, right, and bottom, but not on left */
     padding: 1rem 1rem 0rem 1rem;  
@@ -30,5 +35,22 @@
     padding: 0rem 1rem 0rem 1rem;  
 }
 .adm-mediamgmt-footer {
+=======
+.adm-mediamngmt-header {
+    padding: 1rem;
+    
+}
+.adm-mediamngmt-header h3{
+    margin: 0px;
+    
+}
+.adm-mediamngmt-navbar {
+    
+}
+.adm-mediamngmt-body {
+    
+}
+.adm-mediamngmt-footer {
+>>>>>>> ba8de7b00f9c1ad6a3ade3a5682170b9a46f06ef
     
 }

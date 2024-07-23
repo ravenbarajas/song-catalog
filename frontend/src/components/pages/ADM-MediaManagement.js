@@ -6,6 +6,7 @@ import '../css/ADM-MediaManagement.css'; // Import the stylesheet
 const AdminMediaManagement = () => {
 
     return (
+<<<<<<< HEAD
         <div className="adm-mediamgmt-container">
             <div className='adm-mediamgmt-header'>
                 <h3>Media Management</h3>
@@ -41,6 +42,24 @@ const AdminMediaManagement = () => {
 
             </div>
             <div className='adm-mediamgmt-footer'>
+=======
+        <div className="adm-mediamngmt-container">
+            <div className='adm-mediamngmt-header'>
+                <h3>Media Management</h3>
+            </div>
+            <div className='adm-mediamngmt-navbar'>
+                <div className='adm-mediamngmt-tbl-section'>
+
+                </div>
+                <div className='adm-mediamngmt-cntrl-section'>
+                    
+                </div>
+            </div>
+            <div className='adm-mediamngmt-body'>
+
+            </div>
+            <div className='adm-mediamngmt-footer'>
+>>>>>>> ba8de7b00f9c1ad6a3ade3a5682170b9a46f06ef
             </div>
         </div>
     );
