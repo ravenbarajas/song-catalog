@@ -15,16 +15,15 @@ class MediaController extends Controller
 
     public function upload(Request $request)
     {
+        // Validate the file
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
         ]);
 
-        $file = $request->file('file');
+        // Import the file
+        Excel::import(new MediaImport, $request->file('file'));
 
-        // Use Maatwebsite Excel to import the file
-        Excel::import(new MediaImport, $file);
-
-        return response()->json(['message' => 'File uploaded successfully']);
+        return response()->json(['message' => 'File imported successfully'], 200);
     }
     public function search(Request $request)
     {

@@ -4,8 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMediaTable extends Migration
+return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
 {
     Schema::create('media', function (Blueprint $table) {
@@ -37,7 +42,13 @@ class CreateMediaTable extends Migration
     });
 }
 
-    public function down() {
-        Schema::dropIfExists('media');
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('media_table_nullable');
     }
-}
+};
