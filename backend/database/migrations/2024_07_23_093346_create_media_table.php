@@ -8,31 +8,31 @@ class CreateMediaTable extends Migration
 {
     public function up()
 {
-    Schema::create('media', function (Blueprint $table) {
+    Schema::create('media_library', function (Blueprint $table) {
         $table->id();
-        $table->string('catalog_number')->nullable();
-        $table->string('ivory_music_upc_number')->nullable();
-        $table->string('album_or_digital_single')->nullable();
-        $table->string('isrc_format')->nullable();
-        $table->string('song_titles')->nullable();
-        $table->integer('track_sequence')->nullable();
-        $table->string('track_primary_artist_name')->nullable();
-        $table->string('release_type')->nullable();
-        $table->string('label')->nullable();
-        $table->string('song_version')->nullable();
-        $table->string('song_genre')->nullable();
-        $table->string('track_language')->nullable();
-        $table->string('track_parental_advisory')->nullable();
-        $table->string('releasing_territories')->nullable();
-        $table->string('excluded_territories')->nullable();
-        $table->date('original_release_date')->nullable();
-        $table->string('recording_location')->nullable();
-        $table->year('track_recording_year')->nullable();
-        $table->string('publisher')->nullable();
-        $table->string('composer')->nullable();
-        $table->string('producer')->nullable();
-        $table->string('length')->nullable();
-        $table->text('notes')->nullable();
+        $table->string('catalogNumber');
+        $table->string('ivoryMusicUPCNumber');
+        $table->string('albumOrDigitalSingle');
+        $table->string('isrcFormat');
+        $table->string('songTitles');
+        $table->integer('trackSequence');
+        $table->string('trackPrimaryArtistName');
+        $table->string('releaseType');
+        $table->string('label');
+        $table->string('songVersion');
+        $table->string('songGenre');
+        $table->string('trackLanguage');
+        $table->string('trackParentalAdvisory');
+        $table->string('releasingTerritories');
+        $table->string('excludedTerritories');
+        $table->date('originalReleaseDate');
+        $table->string('recordingLocation');
+        $table->string('trackRecordingYear');
+        $table->string('publisher');
+        $table->string('composers');
+        $table->string('producer');
+        $table->string('length');
+        $table->string('notes');
         $table->timestamps();
     });
 }

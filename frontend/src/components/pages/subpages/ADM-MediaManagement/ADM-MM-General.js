@@ -1,38 +1,105 @@
 import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
 import '../../../css/subpages/ADM-MediaManagement/ADM-MM-General.css';
 import axios from 'axios';
 
 const General = () => {
-    const [file, setFile] = useState(null);
+    const [fileUploaded, setFileUploaded] = useState(null);
+    const [tableData, setTableData] = useState([]);
+    const [headers, setHeaders] = useState([]);
+    const [filteredTableData, setFilteredTableData] = useState([]);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [mediaData, setMediaData] = useState([]); // To store fetched media data
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+        const selectedFile = e.target.files[0];
+      
+        if (selectedFile) {
+            const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+            const allowedExtensions = ['xlsx', 'xls', 'csv'];
+            
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert('Only .xlsx, .xls, and .csv files are supported. Please choose a valid file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                const sheetHeaders = jsonData[0];
+                const dataRows = jsonData.slice(1);
+
+                const formattedData = dataRows.map((row) =>
+                    sheetHeaders.reduce((obj, key, index) => {
+                        obj[key] = row[index];
+                        return obj;
+                    }, {})
+                );
+
+                setHeaders(sheetHeaders);
+
+                const nonEmptyRows = formattedData.filter((row) =>
+                    Object.values(row).some((cell) => cell !== undefined && cell !== null && cell !== "")
+                );
+
+                setTableData(nonEmptyRows);
+                setFilteredTableData(nonEmptyRows);
+
+                setFileUploaded(selectedFile);
+            };
+
+            reader.readAsArrayBuffer(selectedFile);
+        }
     };
 
-    const handleUpload = async () => {
-        if (!file) {
-            alert('Please select a file first');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', file);
-
+    const handleSave = async () => {
         try {
-            await axios.post('http://localhost:8000/api/upload', formData, {
+            if (!fileUploaded) {
+                alert('Please upload a file before saving.');
+                return;
+            }
+    
+            const response = await fetch('http://localhost:8000/api/media/save', {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json', // Ensure you accept JSON responses
                 },
+                body: JSON.stringify({ tableData }),
             });
-            alert('File uploaded successfully');
-            setFile(null); // Reset file input
+    
+            if (response.ok) {
+                console.log('Table data saved successfully');
+                alert('Catalog data saved successfully');
+    
+                // Reset state after saving
+                setHeaders([]);
+                setTableData([]);
+                setFileUploaded(false);
+    
+                // Fetch updated data from API
+                const updatedResponse = await fetch('http://localhost:8000/api/media');
+                const updatedData = await updatedResponse.json();
+    
+                setHeaders(Object.keys(updatedData[0]));
+                setTableData(updatedData);
+                setFilteredTableData(updatedData);
+            } else {
+                console.error('Failed to save table data');
+                const errorData = await response.json();
+                console.error('Error details:', errorData);
+            }
         } catch (error) {
-            console.error('Error uploading file:', error);
-            alert('Failed to upload file');
+            console.error('Error saving or fetching table data', error);
         }
     };
+    
 
     const handleSearch = async () => {
         try {
@@ -60,71 +127,31 @@ const General = () => {
             <div className='ADM-MM-General-body'>
                 <div className='ADM-MM-General-tbl-section'>
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Catalog Number</th>
-                                <th>Ivory Music UPC Number</th>
-                                <th>Album / Digital Single</th>
-                                <th>ISRC Format</th>
-                                <th>Song Titles (Track Title)</th>
-                                <th>Track Sequence</th>
-                                <th>Track Primary Artist Name</th>
-                                <th>Release Type (Album Format)</th>
-                                <th>Label (CLine & PLine)</th>
-                                <th>Song Version / Album Version / Track Version</th>
-                                <th>Song Genre</th>
-                                <th>Track Language</th>
-                                <th>Track Parental Advisory</th>
-                                <th>Releasing Territories</th>
-                                <th>Excluded Territories</th>
-                                <th>Original Release Date</th>
-                                <th>Recording Location</th>
-                                <th>Track Recording Year</th>
-                                <th>Publisher</th>
-                                <th>Composer/s</th>
-                                <th>Producer</th>
-                                <th>Length</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {mediaData.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.catalog_number}</td>
-                                    <td>{item.ivory_music_upc_number}</td>
-                                    <td>{item.album}</td>
-                                    <td>{item.isrc_format}</td>
-                                    <td>{item.song_titles}</td>
-                                    <td>{item.track_sequence}</td>
-                                    <td>{item.track_primary_artist_name}</td>
-                                    <td>{item.release_type}</td>
-                                    <td>{item.label}</td>
-                                    <td>{item.song_version}</td>
-                                    <td>{item.song_genre}</td>
-                                    <td>{item.track_language}</td>
-                                    <td>{item.track_parental_advisory}</td>
-                                    <td>{item.releasing_territories}</td>
-                                    <td>{item.excluded_territories}</td>
-                                    <td>{item.original_release_date}</td>
-                                    <td>{item.recording_location}</td>
-                                    <td>{item.track_recording_year}</td>
-                                    <td>{item.publisher}</td>
-                                    <td>{item.composers}</td>
-                                    <td>{item.producer}</td>
-                                    <td>{item.length}</td>
-                                    <td>{item.notes}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+                                <thead>
+                                    <tr>
+                                        {headers.map((header, index) => (
+                                            <th key={index}>{header}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tableData.map((row, rowIndex) => (
+                                        <tr key={rowIndex}>
+                                            {headers.map((header, colIndex) => (
+                                                <td key={colIndex}>{row[header]}</td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
                     </table>
                 </div>
                 <div className='ADM-MM-General-ctrl-section'>
-                    <input
-                        type="file"
-                        accept=".xlsx, .xls"
-                        onChange={handleFileChange}
-                    />
-                    <button type="button" onClick={handleUpload}>Upload</button>
+                    <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
+                    {tableData.length > 0 && (
+                        <div>
+                            <button onClick={handleSave}>Save</button>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className='ADM-MM-General-footer'>

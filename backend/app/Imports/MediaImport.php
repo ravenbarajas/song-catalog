@@ -13,62 +13,60 @@ class MediaImport implements ToModel
     public function model(array $row)
     {
         // Extract values from the associative array
-        $catalogNumber = $row['catalog_number'] ?? null;
-        $ivoryMusicUpcNumber = $row['ivory_music_upc_number'] ?? null;
-        $albumOrDigitalSingle = $row['album_or_digital_single'] ?? null;
-        $isrcFormat = $row['isrc_format'] ?? null;
-        $songTitles = $row['song_titles'] ?? null;
-        $trackSequence = $row['track_sequence'] ?? null;
-        $trackPrimaryArtistName = $row['track_primary_artist_name'] ?? null;
-        $releaseType = $row['release_type'] ?? null;
+        $catalogNumber = $row['catalogNumber'] ?? null;
+        $ivoryMusicUPCNumber = $row['ivoryMusicUPCNumber'] ?? null;
+        $albumOrDigitalSingle = $row['albumOrDigitalSingle'] ?? null;
+        $isrcFormat = $row['isrcFormat'] ?? null;
+        $songTitles = $row['songTitles'] ?? null;
+        $trackSequence = $row['trackSequence'] ?? null;
+        $trackPrimaryArtistName = $row['trackPrimaryArtistName'] ?? null;
+        $releaseType = $row['releaseType'] ?? null;
         $label = $row['label'] ?? null;
-        $songVersion = $row['song_version'] ?? null;
-        $songGenre = $row['song_genre'] ?? null;
-        $trackLanguage = $row['track_language'] ?? null;
-        $trackParentalAdvisory = $row['track_parental_advisory'] ?? null;
-        $releasingTerritories = $row['releasing_territories'] ?? null;
-        $excludedTerritories = $row['excluded_territories'] ?? null;
-        $originalReleaseDate = $row['original_release_date'] ?? null;
-        $recordingLocation = $row['recording_location'] ?? null;
-        $trackRecordingYear = $row['track_recording_year'] ?? null;
+        $songVersion = $row['songVersion'] ?? null;
+        $songGenre = $row['songGenre'] ?? null;
+        $trackLanguage = $row['trackLanguage'] ?? null;
+        $trackParentalAdvisory = $row['trackParentalAdvisory'] ?? null;
+        $releasingTerritories = $row['releasingTerritories'] ?? null;
+        $excludedTerritories = $row['excludedTerritories'] ?? null;
+        $originalReleaseDate = $row['originalReleaseDate'] ?? null;
+        $recordingLocation = $row['recordingLocation'] ?? null;
+        $trackRecordingYear = $row['trackRecordingYear'] ?? null;
         $publisher = $row['publisher'] ?? null;
-        $composer = $row['composer'] ?? null;
+        $composers = $row['composers'] ?? null;
         $producer = $row['producer'] ?? null;
         $length = $row['length'] ?? null;
-        $notes = $row['notes'] ?? null;
 
-        // Check if a media entry with the same catalog number already exists
-        $existingMedia = Media::where('catalog_number', $catalogNumber)->first();
+        // Check if a media record with the same catalogNumber already exists
+        $existingMedia = Media::where('catalogNumber', $catalogNumber)->first();
 
         if (!$existingMedia && $catalogNumber !== null) {
             // Process each line as needed and save to the database
             return new Media([
-                'catalog_number' => $catalogNumber,
-                'ivory_music_upc_number' => $ivoryMusicUpcNumber,
-                'album_or_digital_single' => $albumOrDigitalSingle,
-                'isrc_format' => $isrcFormat,
-                'song_titles' => $songTitles,
-                'track_sequence' => $trackSequence,
-                'track_primary_artist_name' => $trackPrimaryArtistName,
-                'release_type' => $releaseType,
+                'catalogNumber' => $catalogNumber,
+                'ivoryMusicUPCNumber' => $ivoryMusicUPCNumber,
+                'albumOrDigitalSingle' => $albumOrDigitalSingle,
+                'isrcFormat' => $isrcFormat,
+                'songTitles' => $songTitles,
+                'trackSequence' => $trackSequence,
+                'trackPrimaryArtistName' => $trackPrimaryArtistName,
+                'releaseType' => $releaseType,
                 'label' => $label,
-                'song_version' => $songVersion,
-                'song_genre' => $songGenre,
-                'track_language' => $trackLanguage,
-                'track_parental_advisory' => $trackParentalAdvisory,
-                'releasing_territories' => $releasingTerritories,
-                'excluded_territories' => $excludedTerritories,
-                'original_release_date' => $originalReleaseDate,
-                'recording_location' => $recordingLocation,
-                'track_recording_year' => $trackRecordingYear,
+                'songVersion' => $songVersion,
+                'songGenre' => $songGenre,
+                'trackLanguage' => $trackLanguage,
+                'trackParentalAdvisory' => $trackParentalAdvisory,
+                'releasingTerritories' => $releasingTerritories,
+                'excludedTerritories' => $excludedTerritories,
+                'originalReleaseDate' => $originalReleaseDate,
+                'recordingLocation' => $recordingLocation,
+                'trackRecordingYear' => $trackRecordingYear,
                 'publisher' => $publisher,
-                'composer' => $composer,
+                'composers' => $composers,
                 'producer' => $producer,
                 'length' => $length,
-                'notes' => $notes,
             ]);
         } else {
-            \Log::warning('Media with catalog number ' . $catalogNumber . ' already exists or catalog number is null.');
+            \Log::warning('Media with catalogNumber ' . $catalogNumber . ' already exists or catalogNumber is null.');
             return null; // Return null to skip adding this record
         }
     }

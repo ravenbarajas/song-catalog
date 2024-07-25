@@ -33,6 +33,6 @@ Route::get('/media/{id}', [MediaController::class, 'show']);
 Route::put('/media/{id}', [MediaController::class, 'update']);
 Route::delete('/media/{id}', [MediaController::class, 'destroy']);
 
-Route::post('/upload', [MediaController::class, 'upload']);
+Route::post('/media/save', [MediaController::class, 'save']);
 Route::get('/media', [MediaController::class, 'search']);
 
