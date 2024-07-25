@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import '../../../css/subpages/ADM-MediaManagement/ADM-MM-General.css';
 import axios from 'axios';
@@ -8,9 +8,32 @@ const General = () => {
     const [tableData, setTableData] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [filteredTableData, setFilteredTableData] = useState([]);
+    
+    const [isLoading, setIsLoading] = useState(true); // To handle loading state
+    const [isEmpty, setIsEmpty] = useState(false); // To handle empty state
 
     const [searchQuery, setSearchQuery] = useState('');
     const [mediaData, setMediaData] = useState([]); // To store fetched media data
+
+    useEffect(() => {
+        // Fetch data when component mounts or when the page is revisited
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/media');
+                const data = await response.json();
+                
+                setHeaders(Object.keys(data[0] || {}));
+                setTableData(data);
+                setIsEmpty(data.length === 0); // Check if data is empty
+            } catch (error) {
+                console.error('Error fetching table data', error);
+            } finally {
+                setIsLoading(false); // Set loading to false after fetching
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array means this runs once when the component mounts
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -135,7 +158,12 @@ const General = () => {
             </div>
             <div className='ADM-MM-General-body'>
                 <div className='ADM-MM-General-tbl-section'>
-                    <table>
+                    {isLoading ? (
+                        <div className='loading-indicator'>Loading...</div>
+                    ) : isEmpty ? (
+                        <div className='no-data-indicator'>No data available</div>
+                    ) : (
+                    <table className='gen-media-tbl'>
                         <thead>
                             <tr>
                                 {headers.map((header, index) => (
@@ -153,6 +181,7 @@ const General = () => {
                             ))}
                         </tbody>
                     </table>
+                    )}
                 </div>
                 <div className='ADM-MM-General-ctrl-section'>
                     

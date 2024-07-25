@@ -14,10 +14,16 @@
     background-color: #fff;
 }
 .ADM-MM-General-header-search {
-
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: .5rem 0rem .5rem 0rem;  
 }
 .ADM-MM-General-header-upload {
-    
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: .5rem 0rem .5rem 0rem; 
 }
 .ADM-MM-General-body {
     display: flex;
@@ -31,15 +37,45 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 70%;
+    width: 100%;
     background-color: #fff;
     overflow-x: auto; /* Horizontal Scroll */
+}
+.gen-media-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+.gen-media-tbl th, 
+.gen-media-tbl td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.gen-media-tbl th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.gen-media-tbl tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.gen-media-tbl tr:hover {
+    background-color: #f1f1f1;
+}
+
+.loading-indicator, .no-data-indicator {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    padding: 20px;
 }
 .ADM-MM-General-ctrl-section {
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 30%;
     background-color: #fff;
 }
 .ADM-MM-General-footer {
