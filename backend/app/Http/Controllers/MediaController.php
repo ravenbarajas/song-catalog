@@ -114,8 +114,8 @@ class MediaController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $media = Media::where('album', 'like', "%$query%")
-                      ->orWhere('song_titles', 'like', "%$query%")
+        $media = Media::where('albumOrDigitalSingle', 'like', "%$query%")
+                      ->orWhere('songTitles', 'like', "%$query%")
                       // Add more conditions based on fields
                       ->get();
 

@@ -99,7 +99,6 @@ const General = () => {
             console.error('Error saving or fetching table data', error);
         }
     };
-    
 
     const handleSearch = async () => {
         try {
@@ -116,42 +115,47 @@ const General = () => {
     return (
         <div className='ADM-MM-General-container'>
             <div className='ADM-MM-General-header'>
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button type="button" onClick={handleSearch}>Search</button>
+                <div className='ADM-MM-General-header-search'>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button type="button" onClick={handleSearch}>Search</button>
+                </div>
+                <div className='ADM-MM-General-header-upload'>
+                    <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
+                        {tableData.length > 0 && (
+                            <div>
+                                <button onClick={handleSave}>Save</button>
+                            </div>
+                        )}
+                </div>
             </div>
             <div className='ADM-MM-General-body'>
                 <div className='ADM-MM-General-tbl-section'>
                     <table>
-                                <thead>
-                                    <tr>
-                                        {headers.map((header, index) => (
-                                            <th key={index}>{header}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {tableData.map((row, rowIndex) => (
-                                        <tr key={rowIndex}>
-                                            {headers.map((header, colIndex) => (
-                                                <td key={colIndex}>{row[header]}</td>
-                                            ))}
-                                        </tr>
+                        <thead>
+                            <tr>
+                                {headers.map((header, index) => (
+                                    <th key={index}>{header}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableData.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {headers.map((header, colIndex) => (
+                                        <td key={colIndex}>{row[header]}</td>
                                     ))}
-                                </tbody>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
                 </div>
                 <div className='ADM-MM-General-ctrl-section'>
-                    <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
-                    {tableData.length > 0 && (
-                        <div>
-                            <button onClick={handleSave}>Save</button>
-                        </div>
-                    )}
+                    
                 </div>
             </div>
             <div className='ADM-MM-General-footer'>

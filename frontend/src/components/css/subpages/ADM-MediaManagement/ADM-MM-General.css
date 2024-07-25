@@ -7,11 +7,17 @@
 }
 .ADM-MM-General-header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     /* Padding on top, right, and bottom, but not on left */
     padding: .5rem 1rem .5rem 1rem;  
     background-color: #fff;
+}
+.ADM-MM-General-header-search {
+
+}
+.ADM-MM-General-header-upload {
+    
 }
 .ADM-MM-General-body {
     display: flex;
@@ -27,6 +33,7 @@
     height: 100%;
     width: 70%;
     background-color: #fff;
+    overflow-x: auto; /* Horizontal Scroll */
 }
 .ADM-MM-General-ctrl-section {
     display: flex;
