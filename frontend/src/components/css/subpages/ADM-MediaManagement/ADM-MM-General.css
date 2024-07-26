@@ -88,6 +88,12 @@
     color: #666;
     padding: 20px;
 }
+.preview-indicator {
+    font-weight: bold;
+    color: #007bff; /* Change to your desired color */
+    text-align: center;
+    margin-bottom: 1rem;
+}
 .ADM-MM-General-page-ctrl {
     display: flex;
     flex-direction: column;

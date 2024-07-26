@@ -1,50 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import * as XLSX from 'xlsx';
 import '../../../css/subpages/ADM-MediaManagement/ADM-MM-General.css';
 import axios from 'axios';
+import PreviewModal from '../../../modals/UploadPreviewModal'; // Adjust the path as needed
 
 const General = () => {
     const [fileUploaded, setFileUploaded] = useState(null);
     const [tableData, setTableData] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [filteredTableData, setFilteredTableData] = useState([]);
+    const [isPreview, setIsPreview] = useState(false);
+    const fileInputRef = useRef(null);
     
     const [isLoading, setIsLoading] = useState(true); // To handle loading state
     const [isEmpty, setIsEmpty] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 10;
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [mediaData, setMediaData] = useState([]); // To store fetched media data
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/api/media');
-                const data = await response.json();
+    const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false); // State to control modal visibility
+    // Trigger function to open the preview modal
+    const handlePreview = () => {
+        setIsPreviewModalOpen(true);
+    };
+    // Trigger function to close the preview modal
+    const closePreviewModal = () => {
+        setIsPreviewModalOpen(false);
+    };
 
-                const dataHeaders = Object.keys(data[0] || {});
-                const filteredHeaders = dataHeaders.filter(col => columnMapping[col]);
+    // Fetch data from API
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/media');
+            const data = await response.json();
 
-                setHeaders(filteredHeaders.map(col => columnMapping[col]));
-                setTableData(data);
-                setIsEmpty(data.length === 0);
-            } catch (error) {
-                console.error('Error fetching table data', error);
-            } finally {
-                setIsLoading(false);
+            if (data.length === 0) {
+                setIsEmpty(true);
+                setHeaders([]);
+                setTableData([]);
+                return;
             }
-        };
 
-        fetchData();
-    }, []);
+            const dataHeaders = Object.keys(data[0] || {});
+            const filteredHeaders = dataHeaders.filter(col => columnMapping[col]);
+            const mappedHeaders = filteredHeaders.map(col => columnMapping[col]);
+
+            const filteredData = data.map(row =>
+                filteredHeaders.reduce((obj, key) => {
+                    obj[columnMapping[key]] = row[key];
+                    return obj;
+                }, {})
+            );
+
+            setHeaders(mappedHeaders);
+            setTableData(filteredData);
+            setFilteredTableData(filteredData);
+            setIsEmpty(false); // Data is available
+        } catch (error) {
+            console.error('Error fetching table data', error);
+            setIsEmpty(true); // Set empty state on error
+        } finally {
+            setIsLoading(false);
+        }
+    };
     
+    useEffect(() => {
+        fetchData();
+    }, [currentPage, rowsPerPage]);
     
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentTableData = tableData.slice(indexOfFirstRow, indexOfLastRow);
-
     const totalPages = Math.ceil(tableData.length / rowsPerPage);
 
     const handleNextPage = () => {
@@ -93,38 +122,72 @@ const General = () => {
         notes: 'Notes',
     };
     
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) {
-            return;
-        }
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
     
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const csvData = event.target.result;
-            const lines = csvData.split('\n');
-            const result = [];
-            const headers = lines[0].split(',');
+        if (selectedFile) {
+            const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+            const allowedExtensions = ['xlsx', 'xls', 'csv'];
     
-            for (let i = 1; i < lines.length; i++) {
-                const obj = {};
-                const currentLine = lines[i].split(',');
-    
-                for (let j = 0; j < headers.length; j++) {
-                    obj[headers[j]] = currentLine[j];
-                }
-                result.push(obj);
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert('Only .xlsx, .xls, and .csv files are supported. Please choose a valid file.');
+                return;
             }
     
-            const filteredHeaders = headers.filter(col => columnMapping[col]);
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
     
-            setHeaders(filteredHeaders.map(col => columnMapping[col]));
-            setTableData(result);
-            setFileUploaded(true);
-        };
-        reader.readAsText(file);
+                if (jsonData.length === 0) {
+                    alert('The selected file is empty.');
+                    setIsPreview(false);
+                    return;
+                }
+
+                const sheetHeaders = jsonData[0];
+                const dataRows = jsonData.slice(1);
+    
+                const formattedData = dataRows.map((row) =>
+                    sheetHeaders.reduce((obj, key, index) => {
+                        obj[key] = row[index];
+                        return obj;
+                    }, {})
+                );
+    
+                // Filter out rows that are empty
+                const nonEmptyRows = formattedData.filter((row) =>
+                    Object.values(row).some((cell) => cell !== undefined && cell !== null && cell !== "")
+                );
+    
+                // Update state
+                setHeaders(sheetHeaders);
+                setTableData(nonEmptyRows);
+                setFilteredTableData(nonEmptyRows);
+                setIsPreview(true); // Set preview mode on
+                setIsPreviewModalOpen(true); // Open the modal
+                setFileUploaded(selectedFile);
+            };
+    
+            reader.readAsArrayBuffer(selectedFile);
+        }
     };
     
+    const handleCancel = () => {
+        setHeaders([]);
+        setTableData([]);
+        setFilteredTableData([]);
+        setIsPreview(false); // Turn off preview mode
+        setFileUploaded(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ""; // Clear the file input
+            fetchData();
+        }
+    };
+ 
     const handleSave = async () => {
         try {
             if (!fileUploaded) {
@@ -148,15 +211,12 @@ const General = () => {
                 // Reset state after saving
                 setHeaders([]);
                 setTableData([]);
-                setFileUploaded(false);
-    
+                setFilteredTableData([]);
+                setIsPreview(false);
+                setFileUploaded(null);
+        
                 // Fetch updated data from API
-                const updatedResponse = await fetch('http://localhost:8000/api/media');
-                const updatedData = await updatedResponse.json();
-    
-                setHeaders(Object.keys(updatedData[0]));
-                setTableData(updatedData);
-                setFilteredTableData(updatedData);
+                fetchData(); // Ensure to fetch new data after saving
             } else {
                 console.error('Failed to save table data');
                 const errorData = await response.json();
@@ -192,14 +252,19 @@ const General = () => {
                     <button type="button" onClick={handleSearch}>Search</button>
                 </div>
                 <div className='ADM-MM-General-header-upload'>
-                    <input type="file" accept=".xlsx, .xls, .csv" onChange={handleFileChange} />
-                        {tableData.length > 0 && (
-                            <div>
-                                <button onClick={handleSave}>Save</button>
-                            </div>
-                        )}
+                    <input 
+                        type="file" 
+                        accept=".xlsx, .xls, .csv" 
+                        ref={fileInputRef}
+                        onChange={handleFileChange} />
+                    {isPreview && (
+                        <div>
+                            <button onClick={handleSave}>Save</button>
+                            <button onClick={handleCancel}>Cancel</button>
+                        </div>
+                    )}
                 </div>
-                <div className='ADM-MM-General-page-ctrl'>
+                <div className='ADM-MM-General-header-ctrl'>
                     <div className='pagination-controls'>
                         <button className="btn-firstpage" onClick={handleFirstPage} disabled={currentPage === 1}>
                             <i className="fa-solid fa-backward-fast"></i>
@@ -225,26 +290,27 @@ const General = () => {
                         ) : isEmpty ? (
                             <div className='no-data-indicator'>No data available</div>
                         ) : (
-                        <table className='gen-media-tbl'>
-                            <thead>
-                                <tr>
-                                    {headers.map((header, index) => (
-                                        <th key={index}>{header}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentTableData.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                        {headers.map((header, colIndex) => (
-                                            <td key={colIndex}>
-                                                {row[Object.keys(columnMapping).find(key => columnMapping[key] === header)]}
-                                            </td>
+                            <>
+                                {isPreview && <div className='preview-indicator'>Preview</div>}
+                                <table className='gen-media-tbl'>
+                                    <thead>
+                                        <tr>
+                                            {headers.map((header, index) => (
+                                                <th key={index}>{header}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {currentTableData.map((row, rowIndex) => (
+                                            <tr key={rowIndex}>
+                                                {headers.map((header, colIndex) => (
+                                                    <td key={colIndex}>{row[header]}</td>
+                                                ))}
+                                            </tr>
                                         ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </>
                         )}
                     </div>
 
@@ -252,7 +318,17 @@ const General = () => {
             </div>
             <div className='ADM-MM-General-footer'>
                 
-                </div>
+            </div>
+            {isPreviewModalOpen && (
+                    <div className="preview-modal-overlay">
+                        <PreviewModal
+                            isOpen={isPreviewModalOpen}
+                            onRequestClose={closePreviewModal}
+                            previewData={filteredTableData}
+                            headers={headers}
+                        />
+                    </div>
+                )}
         </div>
     );
 };
