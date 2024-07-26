@@ -1,3 +1,5 @@
+@import '@fortawesome/fontawesome-free/css/all.css';
+
 .ADM-MM-General-container {
     display: flex;
     flex-direction: column;
@@ -39,23 +41,37 @@
     height: 100%;
     width: 100%;
     background-color: #fff;
-    overflow-x: auto; /* Horizontal Scroll */
+}
+.ADM-MM-General-tbl-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 20rem;
+    overflow-x: scroll;
 }
 .gen-media-tbl {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
+    overflow-x: scroll;
 }
 .gen-media-tbl th, 
 .gen-media-tbl td {
+    max-width: 150px; /* Adjust the width as needed */
     border: 1px solid #ddd;
-    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: .25rem;
     text-align: left;
 }
 
 .gen-media-tbl th {
     background-color: #f4f4f4;
     font-weight: bold;
+    font-size: 16px;
+}
+.gen-media-tbl td {
+    font-size: 14px;
 }
 
 .gen-media-tbl tr:nth-child(even) {
@@ -72,12 +88,32 @@
     color: #666;
     padding: 20px;
 }
-.ADM-MM-General-ctrl-section {
+.ADM-MM-General-page-ctrl {
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: #fff;
 }
+.pagination-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+.btn-firstpage i, .btn-prevpage i, .btn-nextpage i, .btn-lastpage i {
+    font-size: 1rem;
+    color: #000;
+}
+.btn-firstpage, .btn-prevpage {
+    /* Padding on top, right, and bottom, but not on left */
+    margin: 0rem .5rem 0rem 0rem;
+}
+.btn-nextpage, .btn-lastpage {
+    /* Padding on top, right, and bottom, but not on left */
+    margin: 0rem 0rem 0rem .5rem;
+}
+
 .ADM-MM-General-footer {
     
 }
