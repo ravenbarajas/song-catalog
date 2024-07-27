@@ -42,7 +42,10 @@ const PreviewModal = ({ isOpen, onRequestClose, previewData, headers }) => {
         <div className='preview-modal'>
             <div className='preview-modal-header'>
                 <div className='preview-modal-header-title'>
-
+                    <h2>Upload Preview</h2>
+                        <button onClick={onRequestClose} className="modal-close-btn">
+                            <i className="fa-regular fa-circle-xmark"></i>
+                        </button>
                 </div>
                 <div className='preview-modal-header-upload'>
 
@@ -68,10 +71,6 @@ const PreviewModal = ({ isOpen, onRequestClose, previewData, headers }) => {
             <div className='preview-modal-body'>
                 <div className='preview-modal-tbl-section'>
                     <div className='preview-model-tbl-container'>
-                        <button onClick={onRequestClose} className="modal-close-btn">
-                            <i className="fa-regular fa-circle-xmark"></i>
-                        </button>
-                        <h2>Upload Preview</h2>
                         <div className='table-scroll-container'>
                             <table className='preview-tbl'>
                                 <thead>
