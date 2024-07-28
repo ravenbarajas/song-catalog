@@ -3,7 +3,7 @@
 .preview-modal {
     display: flex;
     flex-direction: column;
-    background-color: #ebebeb;
+    background-color: #ffffff;
     border-radius: .25rem;
     width: 80rem;
     height: 40rem;/* Set a maximum width if desired */
@@ -70,4 +70,7 @@
 
 .preview-tbl tr:hover {
     background-color: #f1f1f1;
+}
+.preview-modal-header-title {
+    background-color: #ebebeb;
 }
