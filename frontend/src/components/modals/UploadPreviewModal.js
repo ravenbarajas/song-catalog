@@ -5,7 +5,7 @@ import '../css/modals/UploadPreviewModal.css'
 Modal.setAppElement('#root'); // Make sure to set the app element for accessibility
 
 const PreviewModal = ({ isOpen, onRequestClose, previewData, headers }) => {
-    const rowsPerPage = 10;
+    const rowsPerPage = 15;
     const [currentPage, setCurrentPage] = useState(1);
 
     const [isPreview, setIsPreview] = useState(false);
@@ -42,27 +42,24 @@ const PreviewModal = ({ isOpen, onRequestClose, previewData, headers }) => {
         <div className='preview-modal'>
             <div className='preview-modal-header'>
                 <div className='preview-modal-header-title'>
-                    <h2>Upload Preview</h2>
-                        <button onClick={onRequestClose} className="modal-close-btn">
-                            <i className="fa-regular fa-circle-xmark"></i>
-                        </button>
+                    <h3>Upload Preview</h3>
                 </div>
                 <div className='preview-modal-header-upload'>
 
                 </div>
                 <div className='preview-modal-header-ctrl'>
                     <div className='pagination-controls'>
-                        <button onClick={handleFirstPage} disabled={currentPage === 1}>
+                        <button className="btn-firstpage" onClick={handleFirstPage} disabled={currentPage === 1}>
                             <i className="fa-solid fa-backward-fast"></i>
                         </button>
-                        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+                        <button className="btn-prevpage" onClick={handlePreviousPage} disabled={currentPage === 1}>
                             <i className="fa-solid fa-caret-left"></i>
                         </button>
                         <span>Page {currentPage} of {totalPages}</span>
-                        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                        <button className="btn-nextpage" onClick={handleNextPage} disabled={currentPage === totalPages}>
                             <i className="fa-solid fa-caret-right"></i>
                         </button>
-                        <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+                        <button className="btn-lastpage" onClick={handleLastPage} disabled={currentPage === totalPages}>
                             <i className="fa-solid fa-forward-fast"></i>
                         </button>
                     </div>
@@ -98,6 +95,11 @@ const PreviewModal = ({ isOpen, onRequestClose, previewData, headers }) => {
                             </table>
                         </div>
                     </div>
+                </div>
+                <div className='preview-modal-ctrl-section'>
+                    <button onClick={onRequestClose} className="modal-close-btn">
+                        <i className="fa-regular fa-circle-xmark"></i>
+                    </button>
                 </div>
             </div>
         </div>

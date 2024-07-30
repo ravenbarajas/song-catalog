@@ -4,6 +4,7 @@
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 .adminhomepage-header {
     display: flex;
@@ -31,10 +32,16 @@
     align-items: center;
     padding-top: 1rem;
 }
+.adminhomepage-body-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+}
 .adminhomepage-body {
     display: flex;
-    width: auto;
-    height: auto;
+    width: 100%; /* Full container width */
+    height: 100%; /* Full container height */
     flex-direction: column;
     justify-content: center;
     align-items: center;

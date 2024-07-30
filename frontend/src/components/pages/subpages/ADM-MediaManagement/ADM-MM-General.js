@@ -16,7 +16,7 @@ const General = () => {
     const [isEmpty, setIsEmpty] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(15);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [mediaData, setMediaData] = useState([]); // To store fetched media data
@@ -214,6 +214,11 @@ const General = () => {
                 setFilteredTableData([]);
                 setIsPreview(false);
                 setFileUploaded(null);
+
+                // Reset the file input value
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
         
                 // Fetch updated data from API
                 fetchData(); // Ensure to fetch new data after saving
@@ -264,6 +269,11 @@ const General = () => {
                         </div>
                     )}
                 </div>
+                <div className='ADM-MM-General-header-filter'>
+                    <div className='filter-controls'>
+
+                    </div>
+                </div>
                 <div className='ADM-MM-General-header-ctrl'>
                     <div className='pagination-controls'>
                         <button className="btn-firstpage" onClick={handleFirstPage} disabled={currentPage === 1}>
@@ -284,7 +294,7 @@ const General = () => {
             </div>
             <div className='ADM-MM-General-body'>
                 <div className='ADM-MM-General-tbl-section'>
-                    <div className='ADM-MM-General-tbl-container'>
+                    <div className={`ADM-MM-General-tbl-container ${isEmpty ? 'no-data' : ''}`}>
                         {isLoading ? (
                             <div className='loading-indicator'>Loading...</div>
                         ) : isEmpty ? (

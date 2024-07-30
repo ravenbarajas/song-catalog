@@ -3,12 +3,11 @@
 .preview-modal {
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: .25rem;
     width: 80rem;
     height: 40rem;/* Set a maximum width if desired */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
 }
 .preview-modal-overlay {
     position: fixed;
@@ -25,8 +24,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100%;
     background-color: #fff;
+    padding: 1rem;
 }
   .preview-modal-tbl-container {
     display: flex;
@@ -72,5 +71,52 @@
     background-color: #f1f1f1;
 }
 .preview-modal-header-title {
+    display: flex;
     background-color: #ebebeb;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1rem;
+}
+.preview-modal-header-title h3 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+}
+.preview-modal-header-ctrl {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.pagination-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+.btn-firstpage i, .btn-prevpage i, .btn-nextpage i, .btn-lastpage i {
+    font-size: 1rem;
+    color: #000;
+}
+.btn-firstpage, .btn-prevpage {
+    /* Padding on top, right, and bottom, but not on left */
+    margin: 0rem .5rem 0rem 0rem;
+}
+.btn-nextpage, .btn-lastpage {
+    /* Padding on top, right, and bottom, but not on left */
+    margin: 0rem 0rem 0rem .5rem;
+}
+.preview-modal-body {
+    display: flex;
+    flex-direction: column;
+    background-color: #ebebeb;
+}
+.preview-modal-ctrl-section {
+    display: flex;
+    background-color: #fff;
+    justify-content: end;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1rem;
 }

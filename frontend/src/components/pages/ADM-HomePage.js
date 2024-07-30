@@ -46,23 +46,25 @@ const AdminHomePage = ({ user, setLoggedInUser  }) => {
                     </button>
                 </div>
             </div>
-            <AdminNavbar />
-            <div className='adminhomepage-body'>
-                <Routes>
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="users" element={<Users />} />
-                    <Route path="media" element={<Media />}>
-                        <Route index element={<General />} />
-                        <Route path="General" element={<General />} />
-                        <Route path="Categories" element={<Categories />} />
-                        <Route path="Analytics" element={<Analytics />} />
-                        <Route path="Moderation" element={<Moderation />} />
-                        <Route path="Settings" element={<MediaSettings />} />
-                    </Route>
-                    <Route path="reports" element={<Reports />} />
-                    <Route path="settings" element={<Settings />} />
-                    <Route path="/" element={<Navigate to="dashboard" />} />
-                </Routes>
+            <div className='adminhomepage-body-container'>
+                <AdminNavbar />
+                <div className='adminhomepage-body'>
+                    <Routes>
+                        <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="users" element={<Users />} />
+                        <Route path="media" element={<Media />}>
+                            <Route index element={<General />} />
+                            <Route path="General" element={<General />} />
+                            <Route path="Categories" element={<Categories />} />
+                            <Route path="Analytics" element={<Analytics />} />
+                            <Route path="Moderation" element={<Moderation />} />
+                            <Route path="Settings" element={<MediaSettings />} />
+                        </Route>
+                        <Route path="reports" element={<Reports />} />
+                        <Route path="settings" element={<Settings />} />
+                        <Route path="/" element={<Navigate to="dashboard" />} />
+                    </Routes>
+                </div>
             </div>
             <div className='adminhomepage-footer'>
             </div>

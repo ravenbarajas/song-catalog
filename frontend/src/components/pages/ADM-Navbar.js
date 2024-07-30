@@ -7,19 +7,29 @@ const AdminNavbar = () => {
         <div className='admin-navbar'>
             <div className='admin-navbar-container'>
                 <div className='admin-navbar-btn'>
-                    <Link to="/adminhomepage/dashboard"><p>Dashboard</p></Link>
+                    <Link to="/adminhomepage/dashboard">
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                    </Link>
                 </div>
                 <div className='admin-navbar-btn'>
-                    <Link to="/adminhomepage/users"><p>Users</p></Link>
+                    <Link to="/adminhomepage/users">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </Link>
                 </div>
                 <div className='admin-navbar-btn'>
-                    <Link to="/adminhomepage/media"><p>Media</p></Link>
+                    <Link to="/adminhomepage/media">
+                        <i class="fa fa-music" aria-hidden="true"></i>
+                    </Link>
                 </div>
                 <div className='admin-navbar-btn'>
-                    <Link to="/adminhomepage/reports"><p>Reports</p></Link>
+                    <Link to="/adminhomepage/reports">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                    </Link>
                 </div>
-                <div className='admin-navbar-btn btn-5'>
-                    <Link to="/adminhomepage/settings"><p>Settings</p></Link>
+                <div className='admin-navbar-btn'>
+                    <Link to="/adminhomepage/settings">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </Link>
                 </div>
             </div>
         </div>
