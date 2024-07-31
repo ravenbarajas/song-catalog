@@ -52,12 +52,12 @@ const General = () => {
 
     // Define the groups and their columns
     const columnGroups = {
-        'General Details': ['catalogNumber', 'ivoryMusicUPCNumber', 'albumOrDigitalSingle', 'isrcFormat', 'songTitles', 'trackSequence', 'trackPrimaryArtistName'],
-        'Release Information': ['originalReleaseDate','releaseType', 'label', 'songVersion', 'songGenre', 'trackLanguage', 'trackParentalAdvisory'],
+        'General': ['catalogNumber', 'ivoryMusicUPCNumber', 'albumOrDigitalSingle', 'isrcFormat', 'songTitles', 'trackSequence', 'trackPrimaryArtistName'],
+        'Release': ['originalReleaseDate','releaseType', 'label', 'songVersion', 'songGenre', 'trackLanguage', 'trackParentalAdvisory'],
         'Publishing': ['publisher', 'composers', 'producer',],
         'Others': ['releasingTerritories', 'excludedTerritories', 'recordingLocation', 'trackRecordingYear', 'length', 'notes'],
     };
-    
+
     const columns = [
         'catalogNumber', 'ivoryMusicUPCNumber', 'albumOrDigitalSingle', 'isrcFormat', 'songTitles', 'trackSequence',
         'trackPrimaryArtistName', 'releaseType', 'label', 'songVersion', 'songGenre', 'trackLanguage', 'trackParentalAdvisory',
@@ -85,47 +85,50 @@ const General = () => {
     };
 
     const toggleGroupExpansion = (groupName) => {
-        setExpandedGroups((prevExpandedGroups) => ({
-            ...prevExpandedGroups,
-            [groupName]: !prevExpandedGroups[groupName],
-        }));
+        setExpandedGroups(prevExpandedGroups => {
+            const newExpandedGroups = { ...prevExpandedGroups };
+            
+            // Close all other groups
+            Object.keys(newExpandedGroups).forEach(key => {
+                if (key !== groupName) {
+                    newExpandedGroups[key] = false;
+                }
+            });
+    
+            // Toggle the clicked group
+            newExpandedGroups[groupName] = !prevExpandedGroups[groupName];
+            
+            return newExpandedGroups;
+        });
     };
 
     const renderGroup = (groupName, groupColumns) => (
         <div key={groupName} className="column-group">
-            <div className="group-label-container">
-                <div className='group-label-expand'>
-                    <button
-                        className={`group-toggle-btn ${expandedGroups[groupName] ? 'expanded' : ''}`}
-                        onClick={() => toggleGroupExpansion(groupName)}
-                    >
-                        {expandedGroups[groupName] ? '-' : '+'}
-                    </button>
-                </div>
-                <label className="group-label">
-                    <input
-                        type="checkbox"
-                        checked={groupColumns.every((column) => columnVisibility[column])}
-                        onChange={(e) => handleGroupCheckboxChange(groupColumns, e.target.checked)}
-                    />
-                    &nbsp;{groupName}
-                </label>
-            </div>
-            {expandedGroups[groupName] && groupColumns.map((column) => (
-                <div className='checkbox-wrapper' key={column}>
-                    <div className="checkbox-container">
-                        <input
-                            type="checkbox"
-                            id={column}
-                            checked={columnVisibility[column]}
-                            onChange={() => handleCheckboxChange(column)}
-                        />
-                        <label htmlFor={column} className="checkbox-label">
-                            {columnMapping[column]}
-                        </label>
+            <label className="group-label">
+                <input
+                    type="checkbox"
+                    checked={groupColumns.every((column) => columnVisibility[column])}
+                    onChange={(e) => handleGroupCheckboxChange(groupColumns, e.target.checked)}
+                />
+                &nbsp;{groupName}
+            </label>
+            <div className="group-checkboxes indented-content">
+                {groupColumns.map((column) => (
+                    <div className='checkbox-wrapper' key={column}>
+                        <div className="checkbox-container">
+                            <input
+                                type="checkbox"
+                                id={column}
+                                checked={columnVisibility[column]}
+                                onChange={() => handleCheckboxChange(column)}
+                            />
+                            <label htmlFor={column} className="checkbox-label">
+                                {columnMapping[column]}
+                            </label>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
     
@@ -383,28 +386,40 @@ const General = () => {
                 </div>
                 <div className='ADM-MM-General-header-filter'>
                     <div className='filter-controls'>
-                        {Object.entries(columnGroups).map(([groupName, groupColumns]) =>
-                            renderGroup(groupName, groupColumns)
-                        )}
+                        {Object.entries(columnGroups).map(([groupName, groupColumns]) => (
+                            <div key={groupName} className="filter-group-dropdown">
+                                <button 
+                                    className="dropdown-toggle" 
+                                    onClick={() => toggleGroupExpansion(groupName)}
+                                >
+                                    {groupName} {expandedGroups[groupName] ? '▲' : '▼'}
+                                </button>
+                                {expandedGroups[groupName] && (
+                                    <div className="dropdown-content">
+                                        {renderGroup(groupName, groupColumns)}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div className='ADM-MM-General-header-ctrl'>
-                    <div className='pagination-controls'>
-                        <button className="btn-firstpage" onClick={handleFirstPage} disabled={currentPage === 1}>
-                            <i className="fa-solid fa-backward-fast"></i>
-                        </button>
-                        <button className="btn-prevpage" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                            <i className="fa-solid fa-caret-left"></i>
-                        </button>
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <button className="btn-nextpage" onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            <i className="fa-solid fa-caret-right"></i>
-                        </button>
-                        <button className="btn-lastpage" onClick={handleLastPage} disabled={currentPage === totalPages}>
-                            <i className="fa-solid fa-forward-fast"></i>
-                        </button>
+                <div className='ADM-MM-General-header-pagination'>
+                        <div className='pagination-controls'>
+                            <button className="btn-firstpage" onClick={handleFirstPage} disabled={currentPage === 1}>
+                                <i className="fa-solid fa-backward-fast"></i>
+                            </button>
+                            <button className="btn-prevpage" onClick={handlePreviousPage} disabled={currentPage === 1}>
+                                <i className="fa-solid fa-caret-left"></i>
+                            </button>
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <button className="btn-nextpage" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                                <i className="fa-solid fa-caret-right"></i>
+                            </button>
+                            <button className="btn-lastpage" onClick={handleLastPage} disabled={currentPage === totalPages}>
+                                <i className="fa-solid fa-forward-fast"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
             </div>
             <div className='ADM-MM-General-body'>
                 <div className='ADM-MM-General-tbl-section'>

@@ -5,8 +5,8 @@
     flex-direction: column;
     background-color: #fff;
     border-radius: .25rem;
-    width: 80rem;
-    height: 40rem;/* Set a maximum width if desired */
+    width: 80vw;
+    height: 80vh;/* Set a maximum width if desired */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .preview-modal-overlay {
