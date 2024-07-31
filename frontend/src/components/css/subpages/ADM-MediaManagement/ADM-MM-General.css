@@ -14,6 +14,12 @@
     padding: .5rem 1rem .5rem 1rem;  
     background-color: #fff;
 }
+.ADM-MM-General-header-ctrl {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: .5rem 0rem .5rem 0rem;  
+}
 .ADM-MM-General-header-search {
     display: flex;
     flex-direction: row;
@@ -100,6 +106,29 @@
     flex-direction: column;
     height: 100%;
     background-color: #fff;
+}
+.filter-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+}
+.column-group {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem;
+}
+.group-label-container {
+    display: flex;
+    flex-direction: row;
+    padding: .5rem;
+}
+.group-label {
+    display: flex;
+    flex-direction: row;
+}
+.checkbox-label {
+    font-size: 14px;
 }
 .pagination-controls {
     display: flex;

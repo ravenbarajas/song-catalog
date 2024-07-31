@@ -21,7 +21,117 @@ const General = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [mediaData, setMediaData] = useState([]); // To store fetched media data
 
-    const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false); // State to control modal visibility
+    // Function to render table headers
+    const renderTableHeaders = () => (
+        <thead>
+            <tr>
+                {columns.map(
+                    (column) =>
+                        columnVisibility[column] && (
+                            <th key={column}>{columnMapping[column]}</th>
+                        )
+                )}
+            </tr>
+        </thead>
+    );
+
+    // Function to render table rows
+    const renderTableRows = () => (
+        <tbody>
+            {currentTableData.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                    {columns.map((column) =>
+                        columnVisibility[column] ? (
+                            <td key={column}>{row[columnMapping[column]] || 'N/A'}</td>
+                        ) : null
+                    )}
+                </tr>
+            ))}
+        </tbody>
+    );
+
+    // Define the groups and their columns
+    const columnGroups = {
+        'General Details': ['catalogNumber', 'ivoryMusicUPCNumber', 'albumOrDigitalSingle', 'isrcFormat', 'songTitles', 'trackSequence', 'trackPrimaryArtistName'],
+        'Release Information': ['originalReleaseDate','releaseType', 'label', 'songVersion', 'songGenre', 'trackLanguage', 'trackParentalAdvisory'],
+        'Publishing': ['publisher', 'composers', 'producer',],
+        'Others': ['releasingTerritories', 'excludedTerritories', 'recordingLocation', 'trackRecordingYear', 'length', 'notes'],
+    };
+    
+    const columns = [
+        'catalogNumber', 'ivoryMusicUPCNumber', 'albumOrDigitalSingle', 'isrcFormat', 'songTitles', 'trackSequence',
+        'trackPrimaryArtistName', 'releaseType', 'label', 'songVersion', 'songGenre', 'trackLanguage', 'trackParentalAdvisory',
+        'releasingTerritories', 'excludedTerritories', 'originalReleaseDate', 'recordingLocation', 'trackRecordingYear',
+        'publisher', 'composers', 'producer', 'length', 'notes',
+    ];
+
+    const [columnVisibility, setColumnVisibility] = useState(
+        columns.reduce((acc, column) => ({ ...acc, [column]: true }), {})
+    );
+
+    const [expandedGroups, setExpandedGroups] = useState({});
+
+    const handleCheckboxChange = (column) => {
+        const updatedVisibility = { ...columnVisibility, [column]: !columnVisibility[column] };
+        setColumnVisibility(updatedVisibility);
+    };
+
+    const handleGroupCheckboxChange = (groupColumns, checked) => {
+        const updatedVisibility = { ...columnVisibility };
+        groupColumns.forEach((column) => {
+            updatedVisibility[column] = checked;
+        });
+        setColumnVisibility(updatedVisibility);
+    };
+
+    const toggleGroupExpansion = (groupName) => {
+        setExpandedGroups((prevExpandedGroups) => ({
+            ...prevExpandedGroups,
+            [groupName]: !prevExpandedGroups[groupName],
+        }));
+    };
+
+    const renderGroup = (groupName, groupColumns) => (
+        <div key={groupName} className="column-group">
+            <div className="group-label-container">
+                <div className='group-label-expand'>
+                    <button
+                        className={`group-toggle-btn ${expandedGroups[groupName] ? 'expanded' : ''}`}
+                        onClick={() => toggleGroupExpansion(groupName)}
+                    >
+                        {expandedGroups[groupName] ? '-' : '+'}
+                    </button>
+                </div>
+                <label className="group-label">
+                    <input
+                        type="checkbox"
+                        checked={groupColumns.every((column) => columnVisibility[column])}
+                        onChange={(e) => handleGroupCheckboxChange(groupColumns, e.target.checked)}
+                    />
+                    &nbsp;{groupName}
+                </label>
+            </div>
+            {expandedGroups[groupName] && groupColumns.map((column) => (
+                <div className='checkbox-wrapper' key={column}>
+                    <div className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            id={column}
+                            checked={columnVisibility[column]}
+                            onChange={() => handleCheckboxChange(column)}
+                        />
+                        <label htmlFor={column} className="checkbox-label">
+                            {columnMapping[column]}
+                        </label>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+    
+    // State to control modal visibility
+    const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+
     // Trigger function to open the preview modal
     const handlePreview = () => {
         setIsPreviewModalOpen(true);
@@ -247,31 +357,35 @@ const General = () => {
     return (
         <div className='ADM-MM-General-container'>
             <div className='ADM-MM-General-header'>
-                <div className='ADM-MM-General-header-search'>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <button type="button" onClick={handleSearch}>Search</button>
-                </div>
-                <div className='ADM-MM-General-header-upload'>
-                    <input 
-                        type="file" 
-                        accept=".xlsx, .xls, .csv" 
-                        ref={fileInputRef}
-                        onChange={handleFileChange} />
-                    {isPreview && (
-                        <div>
-                            <button onClick={handleSave}>Save</button>
-                            <button onClick={handleCancel}>Cancel</button>
-                        </div>
-                    )}
+                <div className='ADM-MM-General-header-ctrl'>
+                    <div className='ADM-MM-General-header-search'>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button type="button" onClick={handleSearch}>Search</button>
+                    </div>
+                    <div className='ADM-MM-General-header-upload'>
+                        <input 
+                            type="file" 
+                            accept=".xlsx, .xls, .csv" 
+                            ref={fileInputRef}
+                            onChange={handleFileChange} />
+                        {isPreview && (
+                            <div>
+                                <button onClick={handleSave}>Save</button>
+                                <button onClick={handleCancel}>Cancel</button>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className='ADM-MM-General-header-filter'>
                     <div className='filter-controls'>
-
+                        {Object.entries(columnGroups).map(([groupName, groupColumns]) =>
+                            renderGroup(groupName, groupColumns)
+                        )}
                     </div>
                 </div>
                 <div className='ADM-MM-General-header-ctrl'>
@@ -303,22 +417,8 @@ const General = () => {
                             <>
                                 {isPreview && <div className='preview-indicator'>Preview</div>}
                                 <table className='gen-media-tbl'>
-                                    <thead>
-                                        <tr>
-                                            {headers.map((header, index) => (
-                                                <th key={index}>{header}</th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {currentTableData.map((row, rowIndex) => (
-                                            <tr key={rowIndex}>
-                                                {headers.map((header, colIndex) => (
-                                                    <td key={colIndex}>{row[header]}</td>
-                                                ))}
-                                            </tr>
-                                        ))}
-                                    </tbody>
+                                    {renderTableHeaders()}
+                                    {renderTableRows()}
                                 </table>
                             </>
                         )}
